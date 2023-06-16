@@ -12,13 +12,12 @@ Create log records
             .setNumberOfRecords(2)
             .setRequestPayload(REQUEST_BODY)
             .setResponsePayload(RESPONSE_BODY)
-            .setFieldsFromCallout(new HTTPConnectionHandler.Result(null, null, null, null));
 
         // log can be finished at any time
         log1.finishLogging(); // adds current log in integrationLogs list
 
         // Log #2: finish logging immediately
-        integrationLogs.startLogging(new HTTPConnectionHandler.Result(null, null, null, null))
+        integrationLogs.startLogging()
             .setStatus(400)
             .setResponseStatusCode(400)
             .setNumberOfRecords(1)
