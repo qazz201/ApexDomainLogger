@@ -100,6 +100,7 @@ public with sharing class IntegrationLogs {
     public class Builder {
         private IntegrationLog__c log;
         private IntegrationLogs parent;
+        private List<String> errorMessages = new List<String>();
 
         public Builder() {
             this.log = new IntegrationLog__c();
@@ -114,6 +115,7 @@ public with sharing class IntegrationLogs {
          *@description Can be called to return IntegrationLog__c with populated fields
          */
         public IntegrationLog__c build() {
+            this.populateErrorMessagesInField();
             return this.log;
         }
 
@@ -127,7 +129,7 @@ public with sharing class IntegrationLogs {
                 throw new BuilderException('The parent instance should exist');
             }
 
-            parent?.finishLogging(this.log);
+            parent?.finishLogging(this.build());
         }
 
         public Builder setFieldsFromCallout(HTTPConnectionHandler.Result calloutWrapper) {
@@ -199,13 +201,7 @@ public with sharing class IntegrationLogs {
                 return this;
             }
 
-            String previousError = '';
-
-            if (String.isNotBlank(this.log?.ErrorMessage__c)) {
-                previousError = this.log?.ErrorMessage__c;
-            }
-
-            this.log.ErrorMessage__c = ' \n ' + previousError + ' \n ' + errorMsg + ' \n ';
+            this.errorMessages.add(errorMsg);
             return this;
         }
 
@@ -222,6 +218,14 @@ public with sharing class IntegrationLogs {
         public Builder setResponsePayload(String payload) {
             this.log.ResponsePayload__c = payload;
             return this;
+        }
+
+        private void populateErrorMessagesInField() {
+            if (Lists.isEmpty(this.errorMessages)) {
+                return;
+            }
+
+            this.log.ErrorMessage__c = String.join(this.errorMessages, '\n\n');
         }
     }
     public class BuilderException extends Exception {
