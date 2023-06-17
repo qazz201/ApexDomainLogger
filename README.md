@@ -10,6 +10,8 @@ Create log records
             .setStatus(SUCCESS_STATUS)
             .setResponseStatusCode(200)
             .setNumberOfRecords(2)
+            .setErrorMessage(new TestException(EXCEPTION_MESSAGE)) //the messages will be aggregated in one message
+            .setErrorMessage('Some new error Message') //the messages will be aggregated in one message
             .setRequestPayload(REQUEST_BODY)
             .setResponsePayload(RESPONSE_BODY)
 
