@@ -1,5 +1,14 @@
 # ApexDomainLogger
-Create log records
+Create log records.
+
+For example, we have an object called ```IntegrationLog__c``` with the fields:
+- ErrorMessage__c - String
+- NumberofRecords__c - Integer
+- Status__c - String
+- RequestPayload__c - String( Http request payload)
+- ResponsePayload__c - String( Http response payload)
+
+And we can dynamically create as many IntegrationLog__c records as we want during the transaction by using ```commitLogs()``` that saves records in the DB.
 
 ### Use Case #1
 ```java
