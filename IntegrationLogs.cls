@@ -85,7 +85,10 @@ public with sharing class IntegrationLogs {
     }
 
     /**
-     *@description It is used for upserting Log (IntegrationLog__c) records
+     *@description It is used for upserting Log (IntegrationLog__c) records.
+     * Important! 
+     * Call 'finishLogging(...)' method before committing logs. 
+     * In this case logs are added to the list and can be committed.
      */
     public void commitLogs() {
         if (Lists.isEmpty(integrationLogs)) {
